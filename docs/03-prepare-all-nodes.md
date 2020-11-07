@@ -43,7 +43,6 @@ sysctl --system
 We're going to use `contaierd` & `runc` here. Other container runtimes may work as well.
 
 ```sh
-apk add --no-cache curl
 # Define desired components version
 containerd_version=1.2.14
 runc_version=1.0.0-rc92
