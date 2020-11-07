@@ -44,8 +44,8 @@ We're going to use `contaierd` & `runc` here. Other container runtimes may work 
 
 ```sh
 # Define desired components version
-containerd_version=1.3.4
-runc_version=1.0.0-rc90
+containerd_version=1.2.14
+runc_version=1.0.0-rc92
 
 # Install containerd
 curl -sSLO https://github.com/containerd/containerd/releases/download/v${containerd_version}/containerd-${containerd_version}.linux-amd64.tar.gz
