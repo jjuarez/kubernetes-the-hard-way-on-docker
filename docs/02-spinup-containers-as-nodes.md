@@ -47,7 +47,7 @@ for node in "master0" "master1" "master2" "worker0" "worker1"; do
         --volume /var \
         --volume /lib/modules:/lib/modules:ro \
         --volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
-        us.icr.io/jjuare/k8s-ready:ubuntu.20.04
+        us.icr.io/jjuarez/k8s-ready:ubuntu.20.04
 done
 
 # Review the containers we spun up
