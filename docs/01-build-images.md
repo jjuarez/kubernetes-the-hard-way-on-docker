@@ -8,7 +8,7 @@ There are two Docker images involved:
 ## haproxy
 
 ```sh
-( cd images/haproxy && docker build --rm -t us.icr.io/jjuarez/k8s-haproxy:2.1.7-alpine -f Dokerfile . )
+( cd images/haproxy && docker build --rm -t us.icr.io/jjuarez/k8s-haproxy:2.1.7-alpine -f Dockerfile . )
 ```
 
 ## k8s-ready
