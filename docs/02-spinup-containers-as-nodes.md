@@ -27,7 +27,7 @@ docker run \
     --restart=on-failure:1 \
     --tty \
     --publish=6443/TCP \
-    quay.io/brightzheng100/k8s-haproxy:2.1.7-alpine
+    us.icr.io/jjuarez/k8s-haproxy:2.1.7-alpine
 
 # Spin up the Kubernetes nodes
 for node in "master0" "master1" "master2" "worker0" "worker1"; do
@@ -47,7 +47,7 @@ for node in "master0" "master1" "master2" "worker0" "worker1"; do
         --volume /var \
         --volume /lib/modules:/lib/modules:ro \
         --volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
-        quay.io/brightzheng100/k8s-ready:ubuntu.20.04
+        us.icr.io/jjuare/k8s-ready:ubuntu.20.04
 done
 
 # Review the containers we spun up
