@@ -8,7 +8,7 @@ There are two Docker images involved:
 ## haproxy
 
 ```sh
-( cd images/haproxy && docker build -t quay.io/brightzheng100/k8s-haproxy:2.1.7-alpine . )
+( cd images/haproxy && docker build --rm -t us.icr.io/jjuarez/k8s-haproxy:2.1.7-alpine -f Dokerfile . )
 ```
 
 ## k8s-ready
@@ -20,7 +20,7 @@ We're going to use `kind`'s [base image](https://github.com/kubernetes-sigs/kind
 - `mkdir /kind` to make the image happy as we don't use `kind create cluster` to automate the cluster creation process
 
 ```sh
-( cd images/k8s-ready && docker build -t quay.io/brightzheng100/k8s-ready:ubuntu.20.04 . )
+( cd images/k8s-ready && docker build --rm -t us.icr.io/jjuarez/k8s-ready:ubuntu.20.04 -f Dockerfile . )
 ```
 
 > Note: 
