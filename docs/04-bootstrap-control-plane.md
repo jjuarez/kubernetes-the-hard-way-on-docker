@@ -12,23 +12,49 @@ Let's pick one control plane node, say `k8s-master0`, to bootstrap.
 # Define a kubeadm config file
 mkdir -p /etc/kubernetes/kubeadm
 cat > /etc/kubernetes/kubeadm/kubeadm-config.yaml <<EOF
-# Ref: https://godoc.org/k8s.io/kubernetes/cmd/kubeadm/app/apis/kubeadm/v1beta2
-apiVersion: kubeadm.k8s.io/v1beta1
-kind: ClusterConfiguration
-kubernetesVersion: stable
-controlPlaneEndpoint: "k8s-lb0:6443"  # pointing to lb
-networking:
-  podSubnet: "10.32.0.0/12"           # the CIDR the CNI may prefer, here is weavenet
-apiServer:
-  certSANs:                           # extra SANs as we eventually will access the cluster from laptop
-  - "localhost"
-  - "127.0.0.1"
+apiVersion: kubeadm.k8s.io/v1beta2
+bootstrapTokens:
+- groups:
+  - system:bootstrappers:kubeadm:default-node-token
+  token: vehl48.8msy2evs9g4ycfej
+  ttl: 24h0m0s
+  usages:
+  - signing
+  - authentication
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: 172.21.0.3
+  bindPort: 6443
+nodeRegistration:
+  criSocket: /run/containerd/containerd.sock
+  name: master0
+  taints:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
 ---
-# Ref: https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/kubelet/config/v1beta1/types.go
-apiVersion: kubelet.config.k8s.io/v1beta1
-kind: KubeletConfiguration
-cgroupDriver: cgroupfs  # cgroupfs | systemd
-failSwapOn: false
+apiServer:
+  certSANs:
+  - localhost
+  - 127.0.0.1
+  timeoutForControlPlane: 4m0s
+apiVersion: kubeadm.k8s.io/v1beta2
+certificatesDir: /etc/kubernetes/pki
+clusterName: kubernetes
+controlPlaneEndpoint: k8s-lb0:6443
+controllerManager: {}
+dns:
+  type: CoreDNS
+etcd:
+  local:
+    dataDir: /var/lib/etcd
+imageRepository: k8s.gcr.io
+kind: ClusterConfiguration
+kubernetesVersion: v1.19.3
+networking:
+  dnsDomain: cluster.local
+  podSubnet: 10.32.0.0/12
+  serviceSubnet: 10.96.0.0/12
+scheduler: {}
 EOF
 
 # Bootstrap kubernetes
